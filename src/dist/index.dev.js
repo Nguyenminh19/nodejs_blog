@@ -10,6 +10,9 @@ var handlebars = require('express-handlebars');
 
 var app = express();
 var port = 3000;
+
+var route = require('./routes');
+
 app.use(express["static"](path.join(__dirname, 'public')));
 app.use(express.urlencoded({
   extended: true
@@ -22,21 +25,9 @@ app.engine('hbs', handlebars({
   extname: '.hbs'
 }));
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'resourses/views')); // route
+app.set('views', path.join(__dirname, 'resourses/views')); // route init
 
-app.get('/', function (req, res) {
-  res.render('home');
-});
-app.get('/news', function (req, res) {
-  res.render('news');
-});
-app.get('/search', function (req, res) {
-  res.render('search');
-});
-app.post('/search', function (req, res) {
-  console.log(req.body);
-  res.send();
-});
+route(app);
 app.listen(port, function () {
   console.log("Example app listening at http://localhost:".concat(port));
 });
