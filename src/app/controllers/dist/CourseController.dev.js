@@ -9,33 +9,30 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var Course = require('../models/Course');
 
 var _require = require('../../util/mongoose'),
-    mutipleMongooseToOject = _require.mutipleMongooseToOject;
+    mongooseToObject = _require.mongooseToObject;
 
-var SiteController =
+var CourseController =
 /*#__PURE__*/
 function () {
-  function SiteController() {
-    _classCallCheck(this, SiteController);
+  function CourseController() {
+    _classCallCheck(this, CourseController);
   }
 
-  _createClass(SiteController, [{
-    key: "index",
-    // [GET] /
-    value: function index(req, res, next) {
-      Course.find({}).then(function (courses) {
-        res.render('home', {
-          courses: mutipleMongooseToOject(courses)
+  _createClass(CourseController, [{
+    key: "show",
+    // [GET] /Course
+    value: function show(req, res, next) {
+      Course.findOne({
+        slug: req.params.slug
+      }).then(function (course) {
+        res.render('courses/show.hbs', {
+          course: mongooseToObject(course)
         });
       })["catch"](next);
     }
-  }, {
-    key: "search",
-    value: function search(req, res) {
-      res.render('search');
-    }
   }]);
 
-  return SiteController;
+  return CourseController;
 }();
 
-module.exports = new SiteController();
+module.exports = new CourseController();

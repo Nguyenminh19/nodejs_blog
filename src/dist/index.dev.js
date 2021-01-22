@@ -13,6 +13,10 @@ var port = 3000;
 
 var route = require('./routes');
 
+var db = require('./config/db'); // Connect to DB
+
+
+db.connect();
 app.use(express["static"](path.join(__dirname, 'public')));
 app.use(express.urlencoded({
   extended: true
@@ -29,5 +33,5 @@ app.set('views', path.join(__dirname, 'resourses/views')); // route init
 
 route(app);
 app.listen(port, function () {
-  console.log("Example app listening at http://localhost:".concat(port));
+  console.log("App listening at http://localhost:".concat(port));
 });

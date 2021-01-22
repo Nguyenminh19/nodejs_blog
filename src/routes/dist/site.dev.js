@@ -6,6 +6,6 @@ var router = express.Router();
 
 var siteController = require('../app/controllers/SiteController');
 
-router.use('/search', siteController.search);
-router.use('/', siteController.index);
+router.get('/search', siteController.search);
+router.get('/', siteController.index);
 module.exports = router;
