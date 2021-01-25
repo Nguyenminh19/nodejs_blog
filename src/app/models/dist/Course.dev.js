@@ -2,11 +2,14 @@
 
 var mongoose = require('mongoose');
 
+var slug = require('mongoose-slug-generator');
+
 var Schema = mongoose.Schema;
+mongoose.plugin(slug);
 var Course = new Schema({
   name: {
     type: String,
-    maxlength: 255
+    required: true
   },
   description: {
     type: String,
@@ -16,13 +19,20 @@ var Course = new Schema({
     type: String,
     maxlength: 255
   },
-  createAt: {
-    type: Date,
-    "default": Date.now
+  videoId: {
+    type: String,
+    required: true
   },
-  updatedAt: {
-    type: Date,
-    "default": Date.now
+  level: {
+    type: String,
+    required: true
+  },
+  slug: {
+    type: String,
+    slug: 'name',
+    unique: true
   }
+}, {
+  timestamps: true
 });
 module.exports = mongoose.model('Course', Course);

@@ -4,7 +4,7 @@ const { mongooseToObject } = require('../../util/mongoose')
 
 class CourseController {
 
-    // [GET] /Course
+    // [GET] /Courses/:slug
 
     show(req, res, next) {
         Course.findOne( {slug: req.params.slug} )
@@ -15,6 +15,24 @@ class CourseController {
             })
 
             .catch(next)
+    }
+
+    // [GET] /courses/create
+    create(req, res, next) {
+        res.render('courses/create')
+    }
+
+    // [POSTT] /courses/store
+    store(req, res, next) {
+        const formdata = req.body
+        formdata.image = `https://img.youtube.com/vi/${req.body.videoId}/sddefault.jpg`
+        const course = new Course(formdata)
+        course.save()
+            .then(() => res.redirect(`/`))
+            .catch(error => {
+                
+            })
+
     }
 }
 

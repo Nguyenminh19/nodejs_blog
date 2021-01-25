@@ -20,7 +20,7 @@ function () {
 
   _createClass(CourseController, [{
     key: "show",
-    // [GET] /Course
+    // [GET] /Courses/:slug
     value: function show(req, res, next) {
       Course.findOne({
         slug: req.params.slug
@@ -29,6 +29,23 @@ function () {
           course: mongooseToObject(course)
         });
       })["catch"](next);
+    } // [GET] /courses/create
+
+  }, {
+    key: "create",
+    value: function create(req, res, next) {
+      res.render('courses/create');
+    } // [POSTT] /courses/store
+
+  }, {
+    key: "store",
+    value: function store(req, res, next) {
+      var formdata = req.body;
+      formdata.image = "https://img.youtube.com/vi/".concat(req.body.videoId, "/sddefault.jpg");
+      var course = new Course(formdata);
+      course.save().then(function () {
+        return res.redirect("/");
+      })["catch"](function (error) {});
     }
   }]);
 
