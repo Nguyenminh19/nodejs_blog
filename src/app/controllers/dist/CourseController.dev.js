@@ -11,6 +11,9 @@ var Course = require('../models/Course');
 var _require = require('../../util/mongoose'),
     mongooseToObject = _require.mongooseToObject;
 
+var _require2 = require('express'),
+    query = _require2.query;
+
 var CourseController =
 /*#__PURE__*/
 function () {
@@ -35,6 +38,16 @@ function () {
     key: "create",
     value: function create(req, res, next) {
       res.render('courses/create');
+    } // [GET] /courses/:id/edit
+
+  }, {
+    key: "edit",
+    value: function edit(req, res, next) {
+      Course.findById(req.params.id).then(function (course) {
+        res.render('courses/edit', {
+          course: mongooseToObject(course)
+        });
+      })["catch"](next);
     } // [POSTT] /courses/store
 
   }, {
@@ -45,7 +58,17 @@ function () {
       var course = new Course(formdata);
       course.save().then(function () {
         return res.redirect("/");
-      })["catch"](function (error) {});
+      })["catch"](next);
+    } // [PUT] /courses/_id
+
+  }, {
+    key: "update",
+    value: function update(req, res, next) {
+      Course.updateOne({
+        _id: req.params.id
+      }, req.body).then(function () {
+        return res.redirect('/me/stored/courses');
+      })["catch"](next);
     }
   }]);
 

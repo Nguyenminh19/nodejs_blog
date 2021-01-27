@@ -18,16 +18,15 @@ function connect() {
 
         case 3:
           console.log("connect success");
-          _context.next = 10;
+          _context.next = 9;
           break;
 
         case 6:
           _context.prev = 6;
           _context.t0 = _context["catch"](0);
           console.log("connect fail");
-          console.log(_context.t0);
 
-        case 10:
+        case 9:
         case "end":
           return _context.stop();
       }
