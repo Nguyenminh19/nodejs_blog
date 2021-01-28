@@ -74,6 +74,26 @@ function () {
   }, {
     key: "destroy",
     value: function destroy(req, res, next) {
+      Course["delete"]({
+        _id: req.params.id
+      }).then(function () {
+        return res.redirect('back');
+      })["catch"](next);
+    } // [PATCH] /courses/:id/restore
+
+  }, {
+    key: "restore",
+    value: function restore(req, res, next) {
+      Course.restore({
+        _id: req.params.id
+      }).then(function () {
+        return res.redirect('back');
+      })["catch"](next);
+    } // [PATCH] /courses/:id/forceDestroy    
+
+  }, {
+    key: "forceDestroy",
+    value: function forceDestroy(req, res, next) {
       Course.deleteOne({
         _id: req.params.id
       }).then(function () {

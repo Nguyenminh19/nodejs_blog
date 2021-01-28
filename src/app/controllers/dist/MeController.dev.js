@@ -11,6 +11,9 @@ var Course = require('../models/Course');
 var _require = require('../../util/mongoose'),
     mutipleMongooseToOject = _require.mutipleMongooseToOject;
 
+var _require2 = require('node-sass'),
+    NULL = _require2.NULL;
+
 var MeController =
 /*#__PURE__*/
 function () {
@@ -22,12 +25,18 @@ function () {
     key: "storeCourses",
     // [GET] /me/stored/courses
     value: function storeCourses(req, res, next) {
-      Course.find({}) //  .then(courses => {
-      //     res.render('me/store-courses', {
-      //      courses: mutipleMongooseToOject(courses)
-      //  })
-      .then(function (courses) {
+      Course.find({}).then(function (courses) {
         res.render('me/store-courses', {
+          courses: mutipleMongooseToOject(courses)
+        });
+      })["catch"](next);
+    } // [GET] /me/trash/courses
+
+  }, {
+    key: "trashCourses",
+    value: function trashCourses(req, res, next) {
+      Course.findDeleted({}).then(function (courses) {
+        res.render('me/trash-courses', {
           courses: mutipleMongooseToOject(courses)
         });
       })["catch"](next);
