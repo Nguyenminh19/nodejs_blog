@@ -8,10 +8,10 @@ class MeController {
     
     // [GET] /me/stored/courses
     storeCourses(req, res, next) {
-
-        Course.find({})        
-            .then(courses => {
+        Promise.all([Course.find({}), Course.countDocumentsDeleted()])
+            .then(([courses, deletedCount]) => {
                 res.render('me/store-courses', {
+                    deletedCount,
                     courses: mutipleMongooseToOject(courses)
                 })
             })
