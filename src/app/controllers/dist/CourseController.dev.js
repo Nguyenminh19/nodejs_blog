@@ -69,6 +69,16 @@ function () {
       }, req.body).then(function () {
         return res.redirect('/me/stored/courses');
       })["catch"](next);
+    } // [DELETE] /course/_id
+
+  }, {
+    key: "destroy",
+    value: function destroy(req, res, next) {
+      Course.deleteOne({
+        _id: req.params.id
+      }).then(function () {
+        return res.redirect('back');
+      })["catch"](next);
     }
   }]);
 
